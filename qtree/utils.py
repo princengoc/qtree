@@ -82,7 +82,6 @@ def _count_accuracy(G_true, G_est, name_suffix = ''):
     true positive = predicted association exists in condition in correct direction
     reverse = predicted association exists in condition in opposite direction
     false positive = predicted association does not exist in condition
-    true descendt = predicted i -> j, actual: j = descendant of i (can be grand+ child)
 
     Args:
         G_true (np.ndarray): [d, d] ground truth graph, {0, 1}
@@ -133,18 +132,6 @@ def _count_accuracy(G_true, G_est, name_suffix = ''):
     #normalize shd
     shd = shd / (np.sum(G_true) + np.sum(G_est))
     return {'fdr'+name_suffix: fdr, 'tpr'+name_suffix: tpr, 'fpr'+name_suffix: fpr, 'shd'+name_suffix: shd}
-
-# def count_accuracy(G_true, G_est,include_reachability = True):
-#   """Count accuracy, including comparison of the reachability matrices."""
-#   scores = _count_accuracy(G_true,G_est)  
-#   if include_reachability:
-#     R_true = getReachability(G_true)
-#     R_est = getReachability(G_est)
-#     _scores_reachable = _count_accuracy(R_true,R_est)
-#     for key in _scores_reachable.keys():
-#       scores[key+'_r'] = _scores_reachable[key]
-#   return scores
-
 
 def count_accuracy(G_true, G_list): 
   """Compute the accuracy scores of G_true vs each tree in G_list, 

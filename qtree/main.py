@@ -151,7 +151,7 @@ def plot(fitResults, plotOptions, river='danube'):
 if __name__ == "__main__":
   #set parameters
   rivers = ['danube','lower-colorado','middle-colorado','upper-colorado','lower-colorado150']
-  q_range = [0.7, 0.75, 0.8, 0.85, 0.9]
+  q_range = [0.7, 0.725, 0.75, 0.775, 0.8, 0.825, 0.85, 0.875, 0.9]
   
   for river in rivers: 
     save_folder = os.path.join('save',river)

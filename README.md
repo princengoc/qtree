@@ -1,7 +1,7 @@
 # QTree
 
 Implementation of the QTree algorithm as appeared in the paper
-*Causal discovery of a river from its extremes* by Tran, Buck and Kluppelberg. 
+*Latent Trees for Extremes* by Tran, Buck and Kluppelberg. 
 
 ## Setup
 
@@ -13,7 +13,7 @@ git clone https://github.com/princengoc/qtree
 cd qtree 
 ```
 
-The included data files are for the 5 rivers presented in the river. 
+The included data files are the 5 rivers presented in the paper. These are: the Danube, three sections of the Lower Colorado, and a subset of the Lower Colorado for stations with at least 150 observations in the raw time-series.
 
 Alternatively, you can do
 

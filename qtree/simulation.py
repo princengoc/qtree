@@ -35,7 +35,6 @@ Testing QTree without Parameter Selection for various Parameters
 
 """
 
-
 import os
 from QTree import QTree
 from utils import saveTo, count_accuracy
@@ -44,30 +43,19 @@ import scipy.stats as st
 import numpy as np
 import networkx as nx
 import random
-
-
  
 def create_sa(d,c1,c2):
-    
     """Generates a random spanning arborescence with d nodes and edge weights uniformly between c1 and c2
-    
     Args: 
       d (int): Number of nodes
       c1 (float): minimum edge weight
       c2 (float): maximum edge weight
-    
     Returns: 
       C (d x d numpy array): Edge weight matrix
-      
     """
-    
-    
-    G=nx.generators.trees.random_tree(d)
-    
+    G=nx.generators.trees.random_tree(d)    
     v=[random.choice(list(G.nodes))]
-    
     A=np.zeros((d,d))
-    
     while len(v):
         v2=[]
         for i in v:
@@ -76,21 +64,12 @@ def create_sa(d,c1,c2):
                 G.remove_edge(n_k,i)
             A[n,i]=1
             v2+=n
-            
         v=np.copy(v2)
-        
     C=np.multiply(np.random.uniform(c1, high=c2, size=(d,d)),A)           
-    
-    
-    
     return(C)
-    
 
-
-def fromCtoB(C):
-    
+  def fromCtoB(C):
     """Calculates the Kleene Star Matrix B from C (Max-times)
-    
     Args: 
       C (d x d numpy array): Edge weight matrix
     
@@ -98,55 +77,35 @@ def fromCtoB(C):
       B (d x d numpy array): Kleene star matrix
       
     """
-
-    
     d=np.size(C,0)
-    
     G=nx.DiGraph(C)
-    top_sort=list(nx.topological_sort(G))
-    
+    top_sort=list(nx.topological_sort(G))  
     B=np.copy(C)+np.eye(d)
-    
     #different distance in top. order
     for idx in range(2,d):        
         for idy, val in enumerate(top_sort[0:d-idx]):
             B[val,top_sort[idy+idx]]=np.amax(np.multiply(B[val,top_sort[idy:(idy+idx)]],B[top_sort[idy:(idy+idx)],top_sort[idx+idy]]))
-              
     return(B)
-
-
 
 def MLMatrixMult(Z,B):
     
-    """Calculates max-linear data, returns log-data
-    
+    """Calculates max-linear data, returns log-data    
     Args: 
       Z (n x d numpy array): Array of all sources, where n is the number of observations, d the number of nodes
       B (d x d numpy array): Kleene star matrix
     
     Returns: 
-      X (n x d numpy array): max-linear log-data
-      
+      X (n x d numpy array): max-linear log-data, ie: X = \log(B \odot Z)
     """
-    
-
-    n=np.size(Z,0)
-    d=np.size(Z,1)
-    
-    X=np.zeros((n,d))
-    
+    (n,d) = np.shape(Z) 
     for i in range(n):
         Y=[np.multiply(Z[i,:],B[:,j]) for j in range(d)]
         X[i,:]=np.amax(Y, axis=1)
-        
     return(np.log(X))   
-
-
-
 
 if __name__ == "__main__":
   
-  np.random.seed(1)
+  np.random.seed(1) #fix seed
   #set parameters
   rep_n=100
   
@@ -159,9 +118,6 @@ if __name__ == "__main__":
   
   #shape
   v=1
-  
-
-  
   for rep in range(rep_n):
       print("Repetition: " + str(rep+1) + " of " + str(rep_n))
       for idx_d,d in enumerate(d_n):
@@ -188,9 +144,3 @@ if __name__ == "__main__":
                       obj = (G_true,G_est,score)  
                       fname = 'output'+ ".pk"
                       saveTo(obj, save_folder,fname)
-
-
-        
-                   
-                    
-

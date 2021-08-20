@@ -59,12 +59,16 @@ These are described in details in Algorithm 2 of the paper and in the documentat
   
 For a debug run, you can also modify the `__main__` block of `qtreeAutoSelect.py`, which defaults to fitting qtree on the Danube only.   
 
-### Do performance plots if the true river network is known. 
+### Do performance plots if the true river network is known
 
 If the true network is known and you just want to check how well QTree works, after running `fit` in `main.py`, you can run `plot`. Plot options are given in the `__main__` block of `main.py`. 
 
 
+### Reproduce the simulation study
 
+To reproduce the simulation study, including the plots, do
+
+`python simulation.py`
 
 
 

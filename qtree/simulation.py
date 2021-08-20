@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
   np.random.seed(1) #fix seed
   #set parameters
-  rep_n=10
+  rep_n=100
 
   d_n=[10,30,50,100]
   n_n=[10,25,50, 100,200, 500, 1000]

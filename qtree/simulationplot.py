@@ -1,37 +1,39 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Jan  4 11:36:26 2021
-@author: Johannes
-Plot the Results of the QTree Simulationstudy
-  Parameters
-  ----------
-  metric: Metric to plot - can be 'fdr', 'tpr', 'fpr' and 'shd'
-  noise= Noise to Signal Ratio; Default values used in the simulation study are 0.1, 0.2 and 0.3
-    
-  Returns
-  -------
-  Saves Plot in the folder output/QTreeSim:
-      
-  metric.png: Figure plotting (n,metric) for all sample sizes n. Different graph sizes d are plotted 
-              separately, solid lines plot the metric of the graph, dashed lines of the reachability graph
-"""
+  """
+   Created on Mon Jan  4 11:36:26 2021
+   @author: Johannes
+  """
 
-import pickle
-import os
 import matplotlib.pyplot as plt
 import matplotlib
 import sys
 
-if __name__ == "__main__":
+
+
+
+def plotMetric(scores,noise=0.3,metric='shd'):
+
+
+  """
+   Plot the Results of the QTree Simulationstudy
+   Parameters
+   ----------
+     scores: List of dictionaries of Scores
+     metric: Metric to plot - can be 'fdr', 'tpr', 'fpr' and 'shd'
+     noise= Noise to Signal Ratio; Default values used in the simulation study are 0.1, 0.2 and 0.3
     
-   metric='shd'   
-   noise=0.3    
+   Returns
+   -------
+   Saves Plot in the folder output/QTreeSim:
+      
+     metric.png: Figure plotting (n,metric) for all sample sizes n. Different graph sizes d are plotted 
+              separately, solid lines plot the metric of the graph, dashed lines of the reachability graph
+  """
+
+ 
    
    save_folder='output/QTreeSim'
-
-   with open(os.path.join(save_folder, 'Scores.pk'), 'rb') as file_name:
-       scores  = pickle.load(file_name)
 
    d_n= list(dict.fromkeys([s['d'] for s in scores]))
    n_n= list(dict.fromkeys([s['n'] for s in scores]))

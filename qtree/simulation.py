@@ -19,13 +19,17 @@ Testing QTree without Parameter Selection for various Parameters
   -------
   Saves Results in the folder output/QTreeSim:
       
-  Scores: list of dictionaries of all mean scores
+  1. Scores.pk: list of dictionaries of all mean scores
   
-  (G_true,G_est,score): (numpy array,numpy array,dict)
+  2. fdr.png/tpr.png/fpr.png/shd.png Plots the respective metrics for increasing sample size n
   
-  G_true: True underlying Graph
-  G_est: Estimated underlying Graph
-  score: Dict of metrics between G_true and G_est: fdr (False Discovery Rate), tpr (True Positive Rate)
+  3. For every ieration, every sample size, graph size and noise, creates a folder and saves the output
+
+     (G_true,G_est,score): (numpy array,numpy array,dict)  
+  
+     G_true: True underlying Graph
+     G_est: Estimated underlying Graph
+     score: Dict of metrics between G_true and G_est: fdr (False Discovery Rate), tpr (True Positive Rate)
          fpr (False Positive Rate), shd (Normalized Structural Hamming Distance) as well as 
          fdr_r, tpr_r, fpr_r and shd_r for the metrics of the respective reachability graphs
 """
@@ -33,6 +37,7 @@ Testing QTree without Parameter Selection for various Parameters
 import os
 from QTree import QTree
 from utils import saveTo, count_accuracy, create_sa, kleene, MLMatrixMult
+from simulationplot import plotMetric
 import pandas as pd
 import scipy.stats as st
 import numpy as np
@@ -44,7 +49,7 @@ if __name__ == "__main__":
 
   np.random.seed(1) #fix seed
   #set parameters
-  rep_n=100
+  rep_n=10
 
   d_n=[10,30,50,100]
   n_n=[10,25,50, 100,200, 500, 1000]
@@ -100,3 +105,6 @@ if __name__ == "__main__":
   if save_folder is not None:
       fname = 'Scores'+ ".pk"
       saveTo(scores, save_folder,fname)
+      
+  for metric in ['fdr', 'tpr', 'fpr', 'shd']:
+       plotMetric(scores,0.3,metric)

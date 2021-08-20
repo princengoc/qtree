@@ -66,7 +66,7 @@ If the true network is known and you just want to check how well QTree works, af
 
 ### Reproduce the simulation study
 
-To reproduce the simulation sutdy, including the plots, do
+To reproduce the simulation study, including the plots, do
 
 `python simulation.py`
 

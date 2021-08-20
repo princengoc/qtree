@@ -13,6 +13,7 @@ import numpy as np
 import networkx as nx
 import os
 import pickle
+import random
 
 
 #naming convention files
@@ -157,3 +158,63 @@ def count_accuracy(G_true, G_list):
     scores.update(_scores_reachable)
     scores_dict += [scores]
   return scores_dict
+
+def create_sa(d,c1,c2):
+    """Generates a random spanning arborescence with d nodes and edge weights uniformly between c1 and c2
+    Args: 
+      d (int): Number of nodes
+      c1 (float): minimum edge weight
+      c2 (float): maximum edge weight
+    Returns: 
+      C (d x d numpy array): Edge weight matrix
+    """
+    G=nx.generators.trees.random_tree(d)    
+    v=[random.choice(list(G.nodes))]
+    A=np.zeros((d,d))
+    while len(v):
+        v2=[]
+        for i in v:
+            n=list(G.neighbors(i))
+            for n_k in n:
+                G.remove_edge(n_k,i)
+            A[n,i]=1
+            v2+=n
+        v=np.copy(v2)
+    C=np.multiply(np.random.uniform(c1, high=c2, size=(d,d)),A)           
+    return(C)
+
+def kleene(C):
+    """Calculates the Kleene Star Matrix B from C (Max-times)
+    Args: 
+      C (d x d numpy array): Edge weight matrix
+    
+    Returns: 
+      B (d x d numpy array): Kleene star matrix
+      
+    """
+    d=np.size(C,0)
+    G=nx.DiGraph(C)
+    top_sort=list(nx.topological_sort(G))  
+    B=np.copy(C)+np.eye(d)
+    #different distance in top. order
+    for idx in range(2,d):        
+        for idy, val in enumerate(top_sort[0:d-idx]):
+            B[val,top_sort[idy+idx]]=np.amax(np.multiply(B[val,top_sort[idy:(idy+idx)]],B[top_sort[idy:(idy+idx)],top_sort[idx+idy]]))
+    return(B)
+
+def MLMatrixMult(Z,B):
+
+    """Calculates max-linear data, returns log-data    
+    Args: 
+      Z (n x d numpy array): Array of all sources, where n is the number of observations, d the number of nodes
+      B (d x d numpy array): Kleene star matrix
+    
+    Returns: 
+      X (n x d numpy array): max-linear log-data, ie: X = \log(B \odot Z)
+    """
+    (n,d) = np.shape(Z) 
+    X=np.zeros((n,d))
+    for i in range(n):
+        Y=[np.multiply(Z[i,:],B[:,j]) for j in range(d)]
+        X[i,:]=np.amax(Y, axis=1)
+    return(np.log(X))   

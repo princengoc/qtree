@@ -210,7 +210,6 @@ def calculatePositions(G):
         y=0
         max_cluster=0
         max_cluster=max([max_cluster]+[len(i.split(',')) for i in s])
-        print(max_cluster)
         x+=5+(max_cluster-1)*3
         for k in s:
             for l in list(G.successors(k)):

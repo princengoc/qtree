@@ -15,7 +15,7 @@ import sys
 def plotMetric(scores,noise=0.3,metric='shd'):
 
 
-  """
+   """
    Plot the Results of the QTree Simulationstudy
    Parameters
    ----------
@@ -29,7 +29,7 @@ def plotMetric(scores,noise=0.3,metric='shd'):
       
      metric.png: Figure plotting (n,metric) for all sample sizes n. Different graph sizes d are plotted 
               separately, solid lines plot the metric of the graph, dashed lines of the reachability graph
-  """
+   """
 
  
    

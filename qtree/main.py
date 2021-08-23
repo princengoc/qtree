@@ -114,7 +114,7 @@ def plot(fitResults, plotOptions, river='danube'):
     plt.close('all')
     plt.figure(figsize=(20,20))
     plotComparison(G,G,nodesize=5)
-    plt.savefig(os.path.join(out_folder,'true.png'))
+    plt.savefig(os.path.join(out_folder,'true.png'), dpi=300)
     plt.close('all')      
 
   if plotOptions['estimatedTree']:
@@ -123,7 +123,7 @@ def plot(fitResults, plotOptions, river='danube'):
     tree = nx.relabel_nodes(tree,labels)
     plt.figure(figsize=(15,15))
     plotComparison(tree,G,nodesize=6)
-    plt.savefig(os.path.join(out_folder,'estimated.png'))
+    plt.savefig(os.path.join(out_folder,'estimated.png'), dpi=300)
     plt.close('all')
             
   if plotOptions['scores']: 

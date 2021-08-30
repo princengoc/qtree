@@ -162,7 +162,7 @@ if __name__ == "__main__":
   save_folder = os.path.join('save',river)
   #set parameters
   sampling_parameters = {'nrep': 10, 'frac': 0.75, 'resample': True, 'save_folder': save_folder} 
-  model_parameters = {'q_range': [0.6,0.7,0.8], 'smallR_range': [0.04, 0.05], 'weights': 'nan', 'refit': True, 'saveAll': True, 'save_folder': save_folder} 
+  model_parameters = {'q_range': [0.6,0.7,0.8], 'smallR_range': [0.05], 'weights': 'nan', 'refit': True, 'saveAll': True, 'save_folder': save_folder} 
 
   print('processing river', river)  
   data_file = os.path.join('data',river,'data.pk')
@@ -179,3 +179,4 @@ if __name__ == "__main__":
   (centroidAndVars,idx_best) = qtreeAutoSelect(samples, **model_parameters)
   if G_true is not None:
     saveScores(G_true,**model_parameters)
+  print('done fitting river', river, '- please run plotting codes to visualize the results.')  
